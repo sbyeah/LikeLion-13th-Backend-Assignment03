@@ -23,7 +23,7 @@ public class OrderService {
     @Transactional
     public void orderSave(OrderSaveRequestDto dto) {
         Product product = productRepository.findById(dto.productId())
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("해당 productId에 해당하는 상품을 찾을 수 없습니다."));
 
         Order order = Order.builder()
                 .product(product)
@@ -37,7 +37,7 @@ public class OrderService {
 
     public OrderListResponseDto orderFindByProduct(Long productId) {
         Product product = productRepository.findById(productId)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("해당 productId에 해당하는 상품을 찾을 수 없습니다."));
 
         List<Order> orders = orderRepository.findByProduct(product);
         List<OrderInfoResponseDto> orderDtos = orders.stream()

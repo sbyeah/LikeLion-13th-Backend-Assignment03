@@ -4,7 +4,7 @@ import com.likelion.assignment3_junseoungbin.product.api.dto.request.ProductSave
 import com.likelion.assignment3_junseoungbin.product.api.dto.response.ProductInfoResponseDto;
 import com.likelion.assignment3_junseoungbin.product.api.dto.response.ProductListResponseDto;
 import com.likelion.assignment3_junseoungbin.product.domain.Product;
-import com.likelion.assignment3_junseoungbin.product.repository.ProductRepository;
+import com.likelion.assignment3_junseoungbin.product.domain.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +37,7 @@ public class ProductService {
 
     public ProductInfoResponseDto productFindOne(Long productId) {
         Product product = productRepository.findById(productId)
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("해당 productId에 해당하는 상품을 찾을 수 없습니다."));
         return ProductInfoResponseDto.from(product);
     }
 }
